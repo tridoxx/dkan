@@ -137,7 +137,7 @@ class HarvestCommands extends DrushCommands {
    * @usage drush dkan:harvest:deregister foo_bar
    *   Deregister the 'foo_bar' harvest.
    * @usage drush dkan:harvest:deregister foo_bar --revert
-   *   PDC-Specific: Deregister the 'foo_bar' harvest, and remove all of its entities.
+   *   Deregister the 'foo_bar' harvest, and remove all of its entities.
    */
   public function deregister(string $id, array $options = ['revert' => FALSE]) {
     $message = 'Could not deregister the ' . $id . ' harvest.';
