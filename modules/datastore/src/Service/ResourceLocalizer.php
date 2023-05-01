@@ -120,7 +120,7 @@ class ResourceLocalizer {
     $dir = "file://" . $this->drupalFiles->getPublicFilesDirectory();
     $localFileDrupalUri = str_replace($dir, "public://", $localFilePath);
     $localUrl = $this->drupalFiles->fileCreateUrl($localFileDrupalUri);
-    $localUrl = Referencer::hostify($localUrl);
+    $localUrl = UrlHostTokenResolver::hostify($localUrl);
 
     $new = $resource->createNewPerspective(self::LOCAL_FILE_PERSPECTIVE, $localFilePath);
 
