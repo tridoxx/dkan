@@ -7,8 +7,10 @@ use Drupal\common\DataResource;
 use Drupal\common\UrlHostTokenResolver;
 use Drupal\Core\Datetime\DateFormatter;
 use Drupal\Core\Queue\QueueFactory;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 use Drupal\metastore\MetastoreItemInterface;
 use Drupal\metastore\Reference\Dereferencer;
+use Drupal\metastore\Reference\MetastoreUrlGenerator;
 use Drupal\metastore\Reference\OrphanChecker;
 use Drupal\metastore\Reference\Referencer;
 use Drupal\metastore\ResourceMapper;
@@ -165,7 +167,7 @@ class LifeCycle {
       $original = NULL;
       [$ref, $original] = $this->retrieveDownloadUrlFromResourceMapper($resourceIdentifier);
 
-      $downloadUrl = isset($original) ? $original : "";
+      $downloadUrl = $original ?? "";
 
       $refProperty = "%Ref:downloadURL";
       $metadata->data->{$refProperty} = count($ref) == 0 ? NULL : $ref;
@@ -174,8 +176,11 @@ class LifeCycle {
     if (is_string($downloadUrl)) {
       $downloadUrl = UrlHostTokenResolver::resolve($downloadUrl);
     }
-
     $metadata->data->downloadURL = $downloadUrl;
+
+    if (StreamWrapperManager::getScheme($metadata->data->describedBy ?? '') == MetastoreUrlGenerator::DKAN_SCHEME) {
+      $metadata->data->describedBy = $this->referencer->metastoreUrlGenerator->generateAbsoluteString($metadata->data->describedBy);
+    }
 
     $data->setMetadata($metadata);
   }
