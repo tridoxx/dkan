@@ -12,7 +12,8 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../modules/'))
+#sys.path.insert(0, os.path.abspath('../../modules/'))
+#sys.path.append(os.path.abspath('..'))
 
 
 # -- Project information -----------------------------------------------------
@@ -22,7 +23,7 @@ copyright = '2023, CivicActions'
 author = 'CivicActions'
 
 # The full version, including alpha/beta/rc tags
-release = '2.14.3'
+release = '2.15.2'
 version = '2.x'
 
 # -- General configuration ---------------------------------------------------
@@ -34,7 +35,8 @@ version = '2.x'
 extensions = [
   'myst_parser',
   'sphinx.ext.autosectionlabel',
-  'sphinxcontrib.httpdomain'
+  'sphinxcontrib.httpdomain',
+  'sphinx_rtd_theme'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -68,7 +70,11 @@ lexers["php"] = PhpLexer(startinline=True, linenos=1)
 lexers["php-annotations"] = PhpLexer(startinline=True, linenos=1)
 
 # The suffix of source filenames.
-source_suffix = ['.rst', '.md']
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.md': 'markdown',
+}
 source_parsers = {'.md': 'myst_parser.sphinx_'}
 
 autosectionlabel_prefix_document = True
+autosectionlabel_maxdepth=None
