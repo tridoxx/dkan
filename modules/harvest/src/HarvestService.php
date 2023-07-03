@@ -142,7 +142,8 @@ class HarvestService implements ContainerInjectionInterface {
     if ($revert) {
       try {
         $this->revertHarvest($id);
-      } catch (\Exception $e) {
+      }
+      catch (\Exception $e) {
       }
     }
 
